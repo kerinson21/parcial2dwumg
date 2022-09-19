@@ -3,7 +3,7 @@ var seccion = 'discover';
 var option = 'movie';
 var api_key = 'f2dc9601342a6b6fa8fb988fa67f60ac';
 var language = 'es-ES';
-const URL_GENERO = 'https://api.themoviedb.org/3/discover/movie?api_key=f2dc9601342a6b6fa8fb988fa67f60ac&with_genres=';
+const URL_GENERO = 'https://api.themoviedb.org/3/discover/movie?api_key=f2dc9601342a6b6fa8fb988fa67f60ac&language=es-ES&with_genres=';
 
 var tarjeta = document.getElementById("peliculas");
 var select = document.getElementById("categorias")
@@ -44,7 +44,6 @@ async function buscarXCateria(){
     var datacategoria = await rcategoria.json();
 
     var categorias = data.results;
-    console.log(categorias);
     imprimirDatos(categorias,datacategoria);
 
     
@@ -58,12 +57,13 @@ function imprimirDatos(datos, datacategoria){
         <div class="card-body">
           <h5 class="card-title">${p.title}</h5>
           <p class="card-text">Fecha de Estreno: <strong>${p.release_date}</strong></p>
-          <p class="card-text">Categoria: <strong>${datacategoria.genres.filter(c => {return c.id === parseInt(select.value)})[0].name}</strong></p>
+          <p class="card-text">Categoria: <strong>${datacategoria.genres.filter(c => {return c.id === p.genre_ids[0]})[0].name}</strong></p>
         </div>
       </div>
 </div>`
 });
 }
+
 
 async function cargarSeries(){
 
@@ -83,9 +83,9 @@ async function cargarSeries(){
     </div>`
     document.getElementById('slideto').innerHTML += `<li data-target="#carouselExampleCaptions" data-slide-to="${i}" id="li${i}"></li>`;
     });
-    console.log(series);
+
     document.getElementById('item0').classList.add('active');
-    document.getElementById('li0').classList.add('active')
+    // document.getElementById('li0').classList.add('active')
 }
 
 cargar();
